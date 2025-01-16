@@ -21,5 +21,5 @@ with st.expander('Data'):
 
 with st.expander('Data visualization'):
   st.scatter_chart(data = df, x = 'bill_length_mm', y = 'flipper_length_mm',
-            color = 'species)
+            color = 'species')
 
