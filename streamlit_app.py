@@ -18,3 +18,8 @@ with st.expander('Data'):
   st.write('**y**')
   y = df['species']
   y
+
+with st.expander('Data visualization'):
+  st.scatter(df, x = 'bill_length_mm', y = 'flipper_length_mm',
+            xlabel = 'Bill length', ylabel = 'Flipper length')
+
