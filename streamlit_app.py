@@ -20,6 +20,6 @@ with st.expander('Data'):
   y
 
 with st.expander('Data visualization'):
-  st.scatter(df, x = 'bill_length_mm', y = 'flipper_length_mm',
+  st.scatter_chart(df, x = 'bill_length_mm', y = 'flipper_length_mm',
             xlabel = 'Bill length', ylabel = 'Flipper length')
 
