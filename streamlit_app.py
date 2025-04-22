@@ -45,7 +45,7 @@ uploaded_file = st.file_uploader("Upload Cloudy Image", type=["jpg", "jpeg", "pn
 
 if uploaded_file:
     input_image = rxr.open_rasterio(uploaded_file)
-    input_image = input_image.transpose('y', 'x', 'variable')
+    input_image = input_image.transpose('y', 'x', 'band')
     input_image = np.array(input_image)
     input_image = Image.from_array(input_image)
     st.image(input_image, caption="Input: Cloudy Image", use_column_width=True)
