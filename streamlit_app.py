@@ -7,7 +7,7 @@ import rioxarray as rxr
 from io import BytesIO
 
 
-MODEL_URL = "https://huggingface.co/SanjayGeospatial/cloud-removal-model/resolve/main/g_model_epoch1.h5"
+MODEL_URL = "https://huggingface.co/SanjayGeospatial/cloud-removal-model/blob/main/g_model_epoch1.h5"
 MODEL_PATH = "g_model_epoch1.h5"
 
 @st.cache_resource
