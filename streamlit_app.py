@@ -14,7 +14,8 @@ from branca.colormap import linear
 def load_model():
     model_path = hf_hub_download(
         repo_id="SanjayGeospatial/cloud-removal-model",
-        filename="g_model_epoch1.h5"
+        filename="g_model_epoch1.h5",
+        force_download=True
     )
     return tf.keras.models.load_model(model_path)
 
