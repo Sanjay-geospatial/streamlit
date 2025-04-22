@@ -25,20 +25,25 @@ def postprocess_image(pred):
     pred = ((pred + 1) / 2) ** 0.4
     return np.clip(pred.squeeze(), 0, 1)
 
-# UI
+# Streamlit UI
 st.title("☁️→🌤️ Cloud Removal App")
 st.write("Upload a cloudy satellite image and get a cloud-free version!")
 
 uploaded_file = st.file_uploader("Upload a GeoTIFF or image file", type=["tif", "tiff", "png", "jpg"])
 
 if uploaded_file:
-    input_raster = rxr.open_rasterio(uploaded_file)
-    input_array = input_raster.transpose("y", "x", "band").values / 255.0
+    # Read image using rioxarray
+    input_raster = rxr.open_rasterio(uploaded_file, mask_and_scale=True)
+    input_array = input_raster.transpose("y", "x", "band").values
 
-    st.image(np.clip(input_array, 0, 1), caption="🌥️ Input Image", use_container_width=True)
+    # Display the input image
+    st.image(np.clip(input_array[0], 0, 1), caption="🌥️ Input Image", use_container_width=True)
 
     with st.spinner("Generating cloud-free image..."):
-        pred = model.predict(preprocess_image(input_array))
+        # Preprocess and predict using the model
+        input_image = preprocess_image(input_array)
+        pred = model.predict(input_image)
         output_image = postprocess_image(pred)
 
+    # Display the output image
     st.image(output_image, caption="☀️ Output: Cloud-Free Image", use_container_width=True)
