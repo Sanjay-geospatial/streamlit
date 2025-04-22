@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 import requests
 import gdown
+from huggingface_hub import hf_hub_download
 import rioxarray as rxr
 from io import BytesIO
 
