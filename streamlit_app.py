@@ -11,17 +11,17 @@ MODEL_URL = "https://huggingface.co/SanjayGeospatial/cloud-removal-model/blob/ma
 MODEL_PATH = "g_model_epoch1.h5"
 
 @st.cache_resource
-def download_and_load_model():
+def download_model():
     if not os.path.exists(MODEL_PATH):
-        with st.spinner("Downloading model..."):
-            response = requests.get(MODEL_URL)
-            if response.status_code == 200:
-                with open(MODEL_PATH, "wb") as f:
-                    f.write(response.content)
-            else:
-                st.error("Failed to download model.")
-                raise ValueError("Failed to download model.")
-    return tf.keras.models.load_model(MODEL_PATH)
+        with requests.get(MODEL_URL, stream=True) as r:
+            r.raise_for_status()
+            with open(MODEL_PATH, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+        print("✅ Model downloaded successfully.")
+    else:
+        print("✅ Model already exists.")
 
 model = download_and_load_model()
 
