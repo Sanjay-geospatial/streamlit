@@ -1,6 +1,7 @@
 import streamlit as st
 import tensorflow as tf
 import os
+from PIL import Image
 import requests
 import gdown
 import rioxarray as rxr
@@ -27,7 +28,7 @@ model = download_model()
 
 # Utility: preprocess input image
 def preprocess_image(img):
-    img = normalized_cloud_free = 2 * (np.array(img) - np.array(img).min()) / (np.array(img).max() - np.array(img).min()) - 1
+    img = normalized_cloud_free = 2 * img - (img).min()) / img.max() - img.min() - 1
     img = np.expand_dims(img, axis = 0)
     return img
 
@@ -44,6 +45,9 @@ uploaded_file = st.file_uploader("Upload Cloudy Image", type=["jpg", "jpeg", "pn
 
 if uploaded_file:
     input_image = rxr.open_rasterio(uploaded_file)
+    input_image = input_image.transpose('y', 'x', 'variable')
+    input_image = np.array(input_image)
+    input_image = Image.from_array(input_image)
     st.image(input_image, caption="Input: Cloudy Image", use_column_width=True)
 
     with st.spinner("Generating cloud-free image..."):
