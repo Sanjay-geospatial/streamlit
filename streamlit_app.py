@@ -6,14 +6,14 @@ import gdown
 import rioxarray as rxr
 
 
-MODEL_URL = "https://drive.google.com/uc?id=1dwRQJytS7qidRt4bhGYz2MDKBlzn8XCQ"
+GOOGLE_DRIVE_URL = "https://drive.google.com/uc?id=1dwRQJytS7qidRt4bhGYz2MDKBlzn8XCQ"
 MODEL_PATH = "cloud_removal_model.h5"
 
 @st.cache_resource
 def download_and_load_model():
     if not os.path.exists(MODEL_PATH):
         with st.spinner("Downloading model from Google Drive..."):
-            gdown.download(id=MODEL_ID, output=MODEL_PATH, quiet=False)
+            gdown.download(GOOGLE_DRIVE_URL, MODEL_PATH, quiet=False)
     return tf.keras.models.load_model(MODEL_PATH)
 
 model = download_and_load_model()
