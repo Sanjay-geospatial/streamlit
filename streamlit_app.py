@@ -10,8 +10,6 @@ from folium.raster_layers import ImageOverlay
 from branca.colormap import linear
 
 # Load model using huggingface_hub
-st.cache_resource.clear()
-@st.cache_resource
 def load_model():
     model_path = hf_hub_download(
         repo_id="SanjayGeospatial/cloud-removal-model",
