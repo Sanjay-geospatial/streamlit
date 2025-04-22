@@ -11,11 +11,17 @@ MODEL_PATH = "cloud_removal_model.h5"
 
 @st.cache_resource
 def download_and_load_model():
-    if not os.path.exists(MODEL_PATH):
-        with st.spinner("Downloading model from Google Drive..."):
-            gdown.download(GOOGLE_DRIVE_URL, MODEL_PATH, quiet=False)
+    if not os.path.exists(MODEL_PATH) or os.path.getsize(MODEL_PATH) < 100000:  # 100KB sanity check
+        st.write("Downloading model...")
+        gdown.download(GOOGLE_DRIVE_URL, MODEL_PATH, quiet=False, use_cookies=True)
+
+    # extra check for corruption
+    if os.path.getsize(MODEL_PATH) < 100000:  # definitely too small
+        raise OSError("Downloaded model is too small or incomplete.")
+
     return tf.keras.models.load_model(MODEL_PATH)
 
+model = download_and_load_model()
 model = download_and_load_model()
 
 # Utility: preprocess input image
