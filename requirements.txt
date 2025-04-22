@@ -5,3 +5,7 @@ rioxarray
 requests
 Pillow
 huggingface_hub
+folium
+branca
+rasterio
+streamlit-folium
