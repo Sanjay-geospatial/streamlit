@@ -4,24 +4,25 @@ import os
 import requests
 import gdown
 import rioxarray as rxr
+from io import BytesIO
 
 
-GOOGLE_DRIVE_URL = "https://drive.google.com/uc?id=1dwRQJytS7qidRt4bhGYz2MDKBlzn8XCQ"
-MODEL_PATH = "cloud_removal_model.h5"
+MODEL_URL = "https://huggingface.co/SanjayGeospatial/cloud-removal-model/resolve/main/g_model_epoch1.h5"
+MODEL_PATH = "g_model_epoch1.h5"
 
 @st.cache_resource
 def download_and_load_model():
-    if not os.path.exists(MODEL_PATH) or os.path.getsize(MODEL_PATH) < 100000:  # 100KB sanity check
-        st.write("Downloading model...")
-        gdown.download(GOOGLE_DRIVE_URL, MODEL_PATH, quiet=False, use_cookies=True)
-
-    # extra check for corruption
-    if os.path.getsize(MODEL_PATH) < 100000:  # definitely too small
-        raise OSError("Downloaded model is too small or incomplete.")
-
+    if not os.path.exists(MODEL_PATH):
+        with st.spinner("Downloading model..."):
+            response = requests.get(MODEL_URL)
+            if response.status_code == 200:
+                with open(MODEL_PATH, "wb") as f:
+                    f.write(response.content)
+            else:
+                st.error("Failed to download model.")
+                raise ValueError("Failed to download model.")
     return tf.keras.models.load_model(MODEL_PATH)
 
-model = download_and_load_model()
 model = download_and_load_model()
 
 # Utility: preprocess input image
