@@ -13,17 +13,15 @@ MODEL_URL = "https://huggingface.co/SanjayGeospatial/cloud-removal-model/resolve
 MODEL_PATH = "g_model_epoch1.h5"
 
 @st.cache_resource
-def download_and_load_model():
-    if not os.path.exists(MODEL_PATH):
-        with requests.get(MODEL_URL, stream=True) as r:
-            r.raise_for_status()
-            with open(MODEL_PATH, 'wb') as f:
-                for chunk in r.iter_content(chunk_size=8192):
-                    f.write(chunk)
-    return tf.keras.models.load_model(MODEL_PATH)
+def load_model():
+    model_path = hf_hub_download(
+        repo_id="SanjayGeospatial/cloud-removal-model",
+        filename="g_model_epoch1.h5"
+    )
+    return tf.keras.models.load_model(model_path)
 
 
-model = download_and_load_model()
+model = load_model()
 
 # Utility: preprocess input image
 def preprocess_image(img):
