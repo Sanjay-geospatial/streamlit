@@ -28,7 +28,7 @@ model = download_model()
 
 # Utility: preprocess input image
 def preprocess_image(img):
-    img = normalized_cloud_free = 2 * img - (img).min()) / img.max() - img.min() - 1
+    img = normalized_cloud_free = 2 * img - (img).min() / img.max() - img.min() - 1
     img = np.expand_dims(img, axis = 0)
     return img
 
