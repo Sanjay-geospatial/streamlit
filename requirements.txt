@@ -4,3 +4,4 @@ tensorflow
 rioxarray
 requests
 Pillow
+huggingface_hub
