@@ -23,7 +23,7 @@ def download_model():
     else:
         print("✅ Model already exists.")
 
-model = download_and_load_model()
+model = download_model()
 
 # Utility: preprocess input image
 def preprocess_image(img):
