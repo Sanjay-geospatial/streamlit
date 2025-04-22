@@ -22,6 +22,7 @@ def download_and_load_model():
                     f.write(chunk)
     return tf.keras.models.load_model(MODEL_PATH)
 
+
 model = download_and_load_model()
 
 # Utility: preprocess input image
