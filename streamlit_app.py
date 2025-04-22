@@ -13,19 +13,16 @@ MODEL_URL = "https://huggingface.co/SanjayGeospatial/cloud-removal-model/blob/ma
 MODEL_PATH = "g_model_epoch1.h5"
 
 @st.cache_resource
-def download_model():
+def download_and_load_model():
     if not os.path.exists(MODEL_PATH):
         with requests.get(MODEL_URL, stream=True) as r:
             r.raise_for_status()
             with open(MODEL_PATH, 'wb') as f:
                 for chunk in r.iter_content(chunk_size=8192):
-                    if chunk:
-                        f.write(chunk)
-        print("✅ Model downloaded successfully.")
-    else:
-        print("✅ Model already exists.")
+                    f.write(chunk)
+    return tf.keras.models.load_model(MODEL_PATH)
 
-model = download_model()
+model = download_and_load_model()
 
 # Utility: preprocess input image
 def preprocess_image(img):
@@ -46,8 +43,7 @@ uploaded_file = st.file_uploader("Upload Cloudy Image", type=["jpg", "jpeg", "pn
 
 if uploaded_file:
     input_image = rxr.open_rasterio(uploaded_file)
-    input_image = input_image.transpose('y', 'x', 'band')
-    input_image = np.array(input_image)
+    input_image = input_image.transpose('y', 'x', 'band').data
     input_image = Image.from_array(input_image)
     st.image(input_image, caption="Input: Cloudy Image", use_column_width=True)
 
