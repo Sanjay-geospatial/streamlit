@@ -35,10 +35,10 @@ if uploaded_file:
     input_raster = rxr.open_rasterio(uploaded_file)
     input_array = input_raster.transpose("y", "x", "band").values / 255.0
 
-    st.image(np.clip(input_array, 0, 1), caption="🌥️ Input Image", use_column_width=True)
+    st.image(np.clip(input_array, 0, 1), caption="🌥️ Input Image", use_container_width=True)
 
     with st.spinner("Generating cloud-free image..."):
         pred = model.predict(preprocess_image(input_array))
         output_image = postprocess_image(pred)
 
-    st.image(output_image, caption="☀️ Output: Cloud-Free Image", use_column_width=True)
+    st.image(output_image, caption="☀️ Output: Cloud-Free Image", use_container_width=True)
