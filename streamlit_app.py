@@ -2,6 +2,7 @@ import streamlit as st
 import tensorflow as tf
 import os
 import requests
+import gdown
 import rioxarray as rxr
 
 
@@ -11,12 +12,8 @@ MODEL_PATH = "cloud_removal_model.h5"
 @st.cache_resource
 def download_and_load_model():
     if not os.path.exists(MODEL_PATH):
-        with st.spinner("Downloading model..."):
-            response = requests.get(MODEL_URL, stream=True)
-            with open(MODEL_PATH, "wb") as f:
-                for chunk in response.iter_content(chunk_size=8192):
-                    if chunk:
-                        f.write(chunk)
+        with st.spinner("Downloading model from Google Drive..."):
+            gdown.download(id=MODEL_ID, output=MODEL_PATH, quiet=False)
     return tf.keras.models.load_model(MODEL_PATH)
 
 model = download_and_load_model()
