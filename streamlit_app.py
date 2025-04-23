@@ -48,14 +48,15 @@ if uploaded_file:
         output_image = postprocess_image(output_tensor[0])
     
     # Normalize to 0-255 for visualization
-    input_vis = ((image_np + 1) / 2)**0.4
+    input_norm = (image_np - image_np.min()) / (image_np.max() - image_np.min())
+    input_vis = input_norm ** 0.4
     output_vis = ((output_image + 1) / 2)**0.4
     
     col1, col2 = st.columns(2)
 
     with col1:
-        st.image(input_vis, caption="☁️ Input: Cloudy Image", use_container_width=True)
+        st.image(input_vis, caption="☁️ Input: Cloudy Image", use_container_width=True, clamp =True)
     
     with col2:
-        st.image(output_vis, caption="🌤️ Output: Cloud-Free Image", use_container_width=True)
+        st.image(output_vis, caption="🌤️ Output: Cloud-Free Image", use_container_width=True, clamp = True)
         
