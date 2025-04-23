@@ -2,10 +2,6 @@ streamlit
 numpy
 tensorflow
 rioxarray
-requests
-Pillow
+altair
 huggingface_hub
-folium
-branca
-rasterio
-streamlit-folium
+
