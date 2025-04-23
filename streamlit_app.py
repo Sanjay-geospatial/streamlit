@@ -50,7 +50,7 @@ if uploaded_file:
     # Normalize to 0-255 for visualization
     input_norm = (image_np - image_np.min()) / (image_np.max() - image_np.min())
     input_vis = input_norm ** 0.4
-    output_vis = ((output_image + 1) / 2)**0.4
+    output_vis = output_image
     
     col1, col2 = st.columns(2)
 
