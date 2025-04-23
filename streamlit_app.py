@@ -60,21 +60,21 @@ if uploaded_file:
     input_image = rxr.open_rasterio(uploaded_file)
     input_image = input_image.transpose('y', 'x', 'band').data
     image_np = np.array(input_image)
-    st.image(image_np, caption="Input: Cloudy Image", use_container_width=True, clamp=True)
     
     with st.spinner("Generating cloud-free image..."):
         input_tensor = preprocess_image(image_np)
         output_tensor = model.predict(input_tensor)
         output_image = postprocess_image(output_tensor[0])
     
-    # Get bounds
-    with rasterio.open(uploaded_file) as src:
-        bounds = [[src.bounds.bottom, src.bounds.left], [src.bounds.top, src.bounds.right]]
-    
     # Normalize to 0-255 for visualization
     input_vis = (((image_np + 1) / 2)**0.4).astype(np.uint8)
     output_vis = (((output_image + 1) / 2)**0.4).astype(np.uint8)
     
-    show_on_map(input_vis, bounds, caption="Input (Cloudy)")
-    show_on_map(output_vis, bounds, caption="Output (Cloud-Free)")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.image(input_vis, caption="☁️ Input: Cloudy Image", use_container_width=True, clamp = True)
     
+    with col2:
+        st.image(output_vis, caption="🌤️ Output: Cloud-Free Image", use_container_width=True, clamp =True)
+        
