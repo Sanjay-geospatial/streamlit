@@ -3,11 +3,7 @@ import tensorflow as tf
 import numpy as np
 import rioxarray as rxr
 from huggingface_hub import hf_hub_download
-import folium
-import rasterio
-from streamlit_folium import st_folium
-from folium.raster_layers import ImageOverlay
-from branca.colormap import linear
+import altair as alt
 
 # Load model using huggingface_hub
 @st.cache_resource
@@ -31,6 +27,7 @@ def postprocess_image(pred):
     pred = ((pred + 1) / 2) ** 0.4
     return np.clip(pred.squeeze(), 0, 1)
 
+alt.themes.enable("dark")
 st.title("☁️→🌤️ Cloud Removal App")
 st.write("Upload a cloudy satellite image and get a cloud-free version!")
 
