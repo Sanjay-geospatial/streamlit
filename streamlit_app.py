@@ -35,8 +35,8 @@ def postprocess_image(pred):
 st.title("☁️→🌤️ Cloud Removal App")
 st.write("Upload a cloudy satellite image and get a cloud-free version!")
 
-st.sidebar.image("cloud_animation.gif", use_column_width=True)
 st.sidebar.title("ℹ️ About the Model")
+st.sidebar.image("cloud_animation.gif", use_container_width=True)
 st.sidebar.markdown("""
 This cloud removal app is based on a Pix2pix GAN (Generative Adversarial Network) model trained to transform cloudy satellite images into cloud-free versions.
 
