@@ -34,6 +34,17 @@ def postprocess_image(pred):
 st.title("☁️→🌤️ Cloud Removal App")
 st.write("Upload a cloudy satellite image and get a cloud-free version!")
 
+st.sidebar.title("ℹ️ About the Model")
+st.sidebar.markdown("""
+This cloud removal app is based on a Pix2pix GAN (Generative Adversarial Network) model trained to transform cloudy satellite images into cloud-free versions.
+
+- **Model:** U-Net Generator (1 epoch trained)
+- **Input shape:** (128, 128, 3)
+- **Output:** Cloud-free RGB image
+- **Trained on:** Sentinel-2 images
+""")
+
+
 uploaded_file = st.file_uploader("Upload a GeoTIFF or image file", type=["tif", "tiff"])
 
 if uploaded_file:
