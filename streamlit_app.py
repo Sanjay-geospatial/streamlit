@@ -50,19 +50,17 @@ def show_on_map(image_array, bounds, caption=""):
     st_folium(m, width=700, height=450)
 
 
-# Streamlit UI
-st.title("🚨 This is a fresh run!")
 st.title("☁️→🌤️ Cloud Removal App")
 st.write("Upload a cloudy satellite image and get a cloud-free version!")
 
-uploaded_file = st.file_uploader("Upload a GeoTIFF or image file", type=["tif", "tiff", "png", "jpg"])
+uploaded_file = st.file_uploader("Upload a GeoTIFF or image file", type=["tif", "tiff"])
 
 if uploaded_file:
     # Read and preprocess
     input_image = rxr.open_rasterio(uploaded_file)
     input_image = input_image.transpose('y', 'x', 'band').data
     image_np = np.array(input_image)
-    st.image(image_np, caption="Input: Cloudy Image", use_container_width=True)
+    st.image(image_np, caption="Input: Cloudy Image", use_container_width=True, clamp=True)
     
     with st.spinner("Generating cloud-free image..."):
         input_tensor = preprocess_image(image_np)
