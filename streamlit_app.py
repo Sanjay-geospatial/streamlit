@@ -27,7 +27,14 @@ def postprocess_image(pred):
     pred = ((pred + 1) / 2) ** 0.4
     return np.clip(pred.squeeze(), 0, 1)
 
+st.set_page_config(
+    page_title="Cloud removal app",
+    page_icon="☁️→🌤️",
+    layout="wide",
+    initial_sidebar_state="expanded")
+
 alt.themes.enable("dark")
+
 st.title("☁️→🌤️ Cloud Removal App")
 st.write("Upload a cloudy satellite image and get a cloud-free version!")
 
