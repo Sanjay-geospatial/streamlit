@@ -20,3 +20,7 @@ This repository contains a **Jupyter Notebook** implementation of a **Pix2Pix GA
 - A Pix2Pix model (U-Net Generator + PatchGAN Discriminator) is trained.
 
 - The trained model is saved to hugging face
+
+  ## Streamlit app
+- The app accepts only the image patches of size 128, 128, 3 as input
+- Link to app : https://pix2pixcloudfree.streamlit.app/
