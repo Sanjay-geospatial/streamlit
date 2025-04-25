@@ -11,3 +11,12 @@ This repository contains a **Jupyter Notebook** implementation of a **Pix2Pix GA
 - ✅ Fully interactive training in a Jupyter notebook (`pix2pix_training.ipynb`)
 - ✅ Trained model saved and versioned in the Hugging face
 - ✅ Streamlit app to visualize results and generate cloud-free images from new inputs
+
+## 🧠 Model Training
+- Sentinel-2 image pairs (cloudy and cloud-free) are downloaded from the cloud.
+
+- Images are preprocessed and formatted as input-output training pairs.
+
+- A Pix2Pix model (U-Net Generator + PatchGAN Discriminator) is trained.
+
+- The trained model is saved to hugging face
